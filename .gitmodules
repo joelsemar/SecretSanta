@@ -1,3 +1,3 @@
-[submodule "static/bootsrap"]
-	path = static/bootsrap
+[submodule "static/bootstrap"]
+	path = static/bootstrap
 	url = https://github.com/twitter/bootstrap.git
