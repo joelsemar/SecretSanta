@@ -1,6 +1,7 @@
 # Create your views here.
 from main.models import Entrant
 from django.http import HttpResponseRedirect
+import random
 
 def submit(request):
     name = request.POST.get('name')
@@ -37,3 +38,20 @@ def processor(request):
        ret['message'] = message
        del request.session['message']
     return ret
+
+
+def make_matches():
+   
+    entrants = Entrant.objects.all()
+    entrant_list = list(entrants)
+
+    for entrant in entrants:
+        left = [e for e in entrant_list if e.id !=entrant.id]
+        if not left:
+            return make_matches()
+        choice = random.choice([e for e in entrant_list if e.id != entrant.id])
+        entrant_list.remove(choice)
+        entrant.match = choice
+
+    for entrant in entrants:
+        entrant.save() 
