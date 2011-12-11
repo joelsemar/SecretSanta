@@ -24,7 +24,7 @@ def submit(request):
     except Entrant.DoesNotExist:
        Entrant.objects.create(email=email, name=name, city=city, zip=zip, street=street, state=state, hint=hint)
 
-    request.session['message']  = "That wasn't so hard eh? You can come back here later to see who else as signed up"
+    request.session['message']  = "That wasn't so hard eh? You can come back here later to see who else has signed up"
     return HttpResponseRedirect('/')
 
 def processor(request):
