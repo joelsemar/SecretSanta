@@ -9,6 +9,7 @@ class Entrant(models.Model):
     city = models.CharField(max_length=256, default='')
     state = models.CharField(max_length=256, default='')
     street = models.CharField(max_length=256, default='')
+    match = models.ForeignKey('self', null=True)
     hint  =  models.TextField(default='')
 
 
