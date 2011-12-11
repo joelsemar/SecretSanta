@@ -17,4 +17,5 @@ class Entrant(models.Model):
 
     def save(self, *args, **kwargs):
         super(Entrant, self).save(*args, **kwargs)
-        send_mail('Secret Santa', 'Just making sure this works', 'secretsanta@joelsemar.com', [self.email], fail_silently=False) 
+        send_mail('Secret Santa', 'Just making sure you gave a valid email address. You\'ll get another email telling you about your victim after everyone signs up.'
+                  , 'secretsanta@joelsemar.com', [self.email], fail_silently=True) 
