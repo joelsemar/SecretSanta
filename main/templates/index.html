@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css">
+<script type='application/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script type='application/javascript' src='{{STATIC_URL}}/bootstrap/js/bootstrap-alerts.js'></script>
+<script type='application/javascript'>
+    $(function(){
+       $('.alert-message').alert();
+     });
+</script>
+</head>
+<body style='margin-top: 60px'>
+<div class='topbar'>
+  <div class='topbar-inner'>
+   <div class='container'>
+    <div class='brand'> Secret Santa</div>
+   </div>
+ </div>
+</div>
+  <div class="container-fluid">
+   <div class="sidebar">
+    <div class='well'>
+    <h5> Participants so far </h5>
+     {% if not entrants_list %}
+       No one has signed up so far 
+     {%else %}
+        <ul class='unstyled'>
+       {% for entrant in entrants_list %}
+          <li>{{entrant.name}}</li>
+       {% endfor %}
+       </ul>
+     {% endif %}
+     </div>
+    </div>
+    <div class="content">
+      <div class='hero-unit'>
+        <h1> Secret Santa </h1>
+        <p>Hundreds of days old tradition between the Fry, Semar and Van Broekhoven Clans
+        {% if error %}
+        <div class='alert-message error in fade out'>
+         <a class='close' href='#'>x</a>
+            {{error}}</div>
+        {% endif %}
+        {% if message %}
+        <div class='alert-message success fade in'>
+         <a class='close' href='#'>x</a>
+            {{message}}</div>
+        {% endif %}
+
+        <form action='/submit/' method='POST' class='form-stacked'>
+          {% csrf_token %}
+         <fieldset>
+          <legend> Sign up if you haven't already. </legend>
+            <div class='clearfix'>
+             <label for='name'>Name</label>
+               <div class='input'>
+                <input class='xlarge' name='name' size=40 type='text'></input>
+                <span class='help-inline'>Required. </input>
+               </div>
+               <label for='name'>Email</label>
+               <div class='input'>
+                <input class='xlarge' name='email' size=40 type='text'></input>
+                <span class='help-inline'>Required. </input>
+              </div>
+            </div>
+         </fieldset>
+         </hr>
+         <fieldset>
+           <legend> Don't make your santa have to track this down:</legend>
+          <div class='clearfix'>
+             <label for='street'>Street</label>
+               <div class='input'>
+                <input class='xlarge' name='street' size=40 type='text'></input>
+              </div>
+             <label for='city'>City</label>
+               <div class='input'>
+                <input class='xlarge' name='city' size=40 type='text'></input>
+              </div>
+              <label for='state'>State</label>
+                  <div class='input'>
+                  <select name='state'>
+                      {% for state in states %}
+                      <option value='{{state.abbrv}}'>{{state.name}}</option>
+                      {% endfor %}
+                  </select>
+                  </div>
+             <label for='zip'>Zip</label>
+               <div class='input'>
+                <input class='xlarge' name='zip' size=40 type='text'></input>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+              <legend> And finally, give your santa a hint or a nudge in the right direction.</legend>
+              <div class='clearfix'>
+                  <label for='hint'>Hint:</label>
+                      <textarea class='xxlarge' name='hint' rows='10'></textarea>
+            </div>
+
+          </fieldset>
+          <div class = 'actions'>
+          <button type='submit' class='btn primary'> Enter </button>
+         </div>
+       </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
