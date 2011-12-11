@@ -10,7 +10,7 @@ from main.models import Entrant
 
 import consts
 urlpatterns = patterns('',
-    #(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
+    (r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
     (r'^$', object_list, {'template_name': 'index.html', 'queryset': Entrant.objects.all(),
         'template_object_name': 'entrants', 'extra_context': {'states' :consts.SUPPORTED_STATES}}),
     (r'^submit/?$', 'main.views.submit'),

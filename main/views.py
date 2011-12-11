@@ -1,6 +1,7 @@
 # Create your views here.
 from main.models import Entrant
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 import random
 
 def submit(request):
@@ -46,12 +47,31 @@ def make_matches():
     entrant_list = list(entrants)
 
     for entrant in entrants:
-        left = [e for e in entrant_list if e.id !=entrant.id]
+        cantget = entrant.cantget.all()
+        left = [e for e in entrant_list if e.id !=entrant.id and e not in cantget]
         if not left:
             return make_matches()
-        choice = random.choice([e for e in entrant_list if e.id != entrant.id])
+        choice = random.choice(left)
         entrant_list.remove(choice)
         entrant.match = choice
 
     for entrant in entrants:
         entrant.save() 
+
+def notify_entrants():
+
+    entrants = Entrant.objects.all().select_related('match')
+    for entrant in entrants: 
+        match = entrant.match
+        msg = """Alright, the results are in, here is your victim:
+
+Name:    %(name)s
+Address: %(street)s %(city)s, %(state)s %(zip)s
+
+Here's what they said about what they want for christmas:
+
+%(hint)s
+
+        """ % {'name': match.name, 'street': match.street, 'city': match.city, 'state': match.state, 'zip': match.zip, 'hint': match.hint}
+        send_mail('Secret Santa Results', msg, 'secretsanta@joelsemar.com', [entrant.email], fail_silently=True) 
+
