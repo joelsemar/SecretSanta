@@ -10,7 +10,7 @@ class Entrant(models.Model):
     state = models.CharField(max_length=256, default='', blank=True)
     street = models.CharField(max_length=256, default='', blank=True)
     match = models.ForeignKey('self', null=True, blank=True)
-    cantget = models.ManyToManyField('self', null=True)
+    cantget = models.ManyToManyField('self', null=True, blank=True)
     hint  =  models.TextField(default='', blank=True)
 
     def __unicode__(self):
