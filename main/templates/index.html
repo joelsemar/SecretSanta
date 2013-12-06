@@ -23,7 +23,7 @@
    <div class="sidebar">
     <div class='well'>
     <h5> Participants so far </h5>
-     {% for group in group_list %}
+     {% for group in groups %}
         <h2> {{group.name}} <h2>
         {% if not group.entrants.all %}
         No one has signed up so far 
@@ -61,7 +61,7 @@
               <label for='group'>Group</label>
                   <div class='input'>
                   <select name='group'>
-                      {% for group in group_list %}
+                      {% for group in groups %}
                       <option value='{{group.name}}'>{{group.name}}</option>
                       {% endfor %}
                   </select>
