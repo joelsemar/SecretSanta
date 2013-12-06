@@ -25,11 +25,11 @@
     <h5> Participants so far </h5>
      {% for group in groups %}
         <h2> {{group.name}} </h2>
-        {% if not group.entrants.all %}
+        {% if not group.entrant_set.all %}
         No one has signed up so far 
         {%else %}
             <ul class='unstyled'>
-        {% for entrant in group.entrants.all %}
+        {% for entrant in group.entrant_set.all %}
             <li>{{entrant.name}}</li>
         {% endfor %}
         </ul>
