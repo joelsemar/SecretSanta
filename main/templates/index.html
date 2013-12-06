@@ -23,15 +23,17 @@
    <div class="sidebar">
     <div class='well'>
     <h5> Participants so far </h5>
-     {% if not entrants_list %}
-       No one has signed up so far 
-     {%else %}
-        <ul class='unstyled'>
-       {% for entrant in entrants_list %}
-          <li>{{entrant.name}}</li>
-       {% endfor %}
-       </ul>
-     {% endif %}
+     {% for group in groups %}
+        {% if not group.entrants.all %}
+        No one has signed up so far 
+        {%else %}
+            <ul class='unstyled'>
+        {% for entrant in group.entrants.all %}
+            <li>{{entrant.name}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+     {% endfor %}
      </div>
     </div>
     <div class="content">
@@ -54,7 +56,16 @@
          <fieldset>
           <legend> Sign up if you haven't already. </legend>
             <div class='clearfix'>
+              <label for='group'>group</label>
+                  <div class='input'>
+                  <select name='group'>
+                      {% for group in groups %}
+                      <option value='{{group.name}}'>{{group.name}}</option>
+                      {% endfor %}
+                  </select>
+                  </div>
              <label for='name'>Name</label>
+               
                <div class='input'>
                 <input class='xlarge' name='name' size=40 type='text'></input>
                 <span class='help-inline'>Required. </input>
