@@ -11,12 +11,8 @@ from main.models import Group
 import consts
 urlpatterns = patterns('',
     (r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
-    (r'^$', object_list, {'template_name': 'index.html', 'queryset': Group.objects.all(),
-        'template_object_name': 'group_list', 'extra_context': {'states' :consts.SUPPORTED_STATES}}),
     (r'^submit/?$', 'main.views.submit'),
     (r'^admin/?', include(admin.site.urls)),
-    (r'', object_list, {'template_name': 'index.html', 'queryset': Group.objects.all(),
-        'template_object_name': 'group_list', 'extra_context': {'states' :consts.SUPPORTED_STATES}}),
- 
+    (r'', 'main.views.home'),
 )
 

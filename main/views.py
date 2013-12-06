@@ -1,11 +1,20 @@
 # Create your views here.
-from main.models import Entrant
+from main.models import Entrant, Group
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from django.views.generic.simple import direct_to_template
 import random
+
+
+def home(request):
+    groups = Group.objects.all()
+    return  direct_to_template(request, 'index.html', extra_context={'group_list': groups})
+
+
 
 def submit(request):
     name = request.POST.get('name')
+    group_name = request.POST.get('group')
     email = request.POST.get('email')
     street = request.POST.get('street')
     city = request.POST.get('city')
@@ -17,12 +26,14 @@ def submit(request):
         request.session['error'] = "We at least need your email address and name."
         return HttpResponseRedirect('/')
 
+    group = Group.objects.get(name=group_name)
+
     try:
-       entrant = Entrant.objects.get(email=email)
+       entrant = Entrant.objects.get(email=email, group=group)
        request.session['error'] = "That email has already signed up."
        return HttpResponseRedirect('/')
     except Entrant.DoesNotExist:
-       Entrant.objects.create(email=email, name=name, city=city, zip=zip, street=street, state=state, hint=hint)
+       Entrant.objects.create(email=email, name=name, city=city, zip=zip, street=street, state=state, hint=hint, group=group)
 
     request.session['message']  = "That wasn't so hard eh? You can come back here later to see who else has signed up"
     return HttpResponseRedirect('/')
