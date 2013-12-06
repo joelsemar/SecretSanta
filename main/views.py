@@ -53,9 +53,9 @@ def processor(request):
     return ret
 
 
-def make_matches():
+def make_matches(group_name):
    
-    entrants = Entrant.objects.all()
+    entrants = Entrant.objects.filter(group__name=group_name)
     entrant_list = list(entrants)
 
     for entrant in entrants:

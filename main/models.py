@@ -21,7 +21,7 @@ class Entrant(models.Model):
     hint  =  models.TextField(default='', blank=True)
 
     def __unicode__(self):
-        return self.name
+        return self.name + ' -- ' + self.group.name
 
     def save(self, *args, **kwargs):
         needs_confirmation = False
