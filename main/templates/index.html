@@ -24,7 +24,7 @@
     <div class='well'>
     <h5> Participants so far </h5>
      {% for group in groups %}
-        <h2> {{group.name}} <h2>
+        <h2> {{group.name}} </h2>
         {% if not group.entrants.all %}
         No one has signed up so far 
         {%else %}
