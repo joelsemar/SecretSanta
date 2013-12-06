@@ -23,7 +23,8 @@
    <div class="sidebar">
     <div class='well'>
     <h5> Participants so far </h5>
-     {% for group in groups %}
+     {% for group in group_list %}
+        <h2> {{group.name}} <h2>
         {% if not group.entrants.all %}
         No one has signed up so far 
         {%else %}
@@ -56,14 +57,16 @@
          <fieldset>
           <legend> Sign up if you haven't already. </legend>
             <div class='clearfix'>
-              <label for='group'>group</label>
+
+              <label for='group'>Group</label>
                   <div class='input'>
                   <select name='group'>
-                      {% for group in groups %}
+                      {% for group in group_list %}
                       <option value='{{group.name}}'>{{group.name}}</option>
                       {% endfor %}
                   </select>
                   </div>
+
              <label for='name'>Name</label>
                
                <div class='input'>
