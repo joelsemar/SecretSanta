@@ -4,11 +4,12 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.views.generic.simple import direct_to_template
 import random
+from consts import SUPPORTED_STATES as states
 
 
 def home(request):
     groups = Group.objects.all()
-    return  direct_to_template(request, 'index.html', extra_context={'group_list': groups})
+    return  direct_to_template(request, 'index.html', extra_context={'states': states, 'groups': groups})
 
 
 
