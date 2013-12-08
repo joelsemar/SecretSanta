@@ -72,7 +72,7 @@ def make_matches(group_name):
 
 def notify_entrants(group_name):
 
-    entrants = Entrant.objects.filer(group__name=group_name).select_related('match')
+    entrants = Entrant.objects.filter(group__name=group_name).select_related('match')
     for entrant in entrants:
         match = entrant.match
         msg = """Alright, the results are in, here is your victim:
