@@ -62,7 +62,7 @@ def make_matches(group_name):
         cantget = entrant.cantget.all()
         left = [e for e in entrant_list if e.id !=entrant.id and e not in cantget]
         if not left:
-            return make_matches()
+            return make_matches(group_name)
         choice = random.choice(left)
         entrant_list.remove(choice)
         entrant.match = choice
