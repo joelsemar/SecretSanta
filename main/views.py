@@ -22,7 +22,7 @@ def submit(request):
     state = request.POST.get('state')
     zip = request.POST.get('zip')
     hint = request.POST.get('hint')
-     
+
     if not (email and name):
         request.session['error'] = "We at least need your email address and name."
         return HttpResponseRedirect('/')
@@ -44,7 +44,7 @@ def processor(request):
     error = request.session.get('error')
     message = request.session.get('message')
     if error:
-       ret['error'] = error 
+       ret['error'] = error
        del request.session['error']
 
     if message:
@@ -54,7 +54,7 @@ def processor(request):
 
 
 def make_matches(group_name):
-   
+
     entrants = Entrant.objects.filter(group__name=group_name)
     entrant_list = list(entrants)
 
@@ -68,12 +68,12 @@ def make_matches(group_name):
         entrant.match = choice
 
     for entrant in entrants:
-        entrant.save() 
+        entrant.save()
 
-def notify_entrants():
+def notify_entrants(group_name):
 
-    entrants = Entrant.objects.all().select_related('match')
-    for entrant in entrants: 
+    entrants = Entrant.objects.filer(group__name=group_name).select_related('match')
+    for entrant in entrants:
         match = entrant.match
         msg = """Alright, the results are in, here is your victim:
 
@@ -85,5 +85,5 @@ Here's what they said about what they want for christmas:
 %(hint)s
 
         """ % {'name': match.name, 'street': match.street, 'city': match.city, 'state': match.state, 'zip': match.zip, 'hint': match.hint}
-        send_mail('Secret Santa Results', msg, 'secretsanta@joelsemar.com', [entrant.email], fail_silently=True) 
+        send_mail('Secret Santa Results', msg, 'secretsanta@joelsemar.com', [entrant.email], fail_silently=True)
 
