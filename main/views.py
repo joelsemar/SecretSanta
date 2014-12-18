@@ -74,6 +74,10 @@ def notify_entrants(group_name):
 
     entrants = Entrant.objects.filter(group__name=group_name).select_related('match')
     for entrant in entrants:
+        notify_entrant(entrant)
+
+
+def notify_entrant(entrant):
         match = entrant.match
         msg = """Alright, the results are in, here is your victim:
 
@@ -86,4 +90,5 @@ Here's what they said about what they want for christmas:
 
         """ % {'name': match.name, 'street': match.street, 'city': match.city, 'state': match.state, 'zip': match.zip, 'hint': match.hint}
         send_mail('Secret Santa Results', msg, 'secretsanta@joelsemar.com', [entrant.email], fail_silently=True)
+
 
